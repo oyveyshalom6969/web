@@ -1,13 +1,151 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Custom Website</title>
-  </head>
-  <body>
-    <h1>Welcome to My Custom Website</h1>
-    <p>This is a simple website where you can upload and view your G-code files!</p>
-    <a href="your-gcode-file.gcode" download>Download G-code</a>
-  </body>
+    <title>Discord Security Bot Registration</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #36393F;
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .form-container {
+            background: #2f3136;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            width: 400px;
+        }
+        h1 {
+            text-align: center;
+            color: #7289da;
+        }
+        .input-field {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #72767d;
+            border-radius: 4px;
+            background: #40444b;
+            color: white;
+        }
+        .input-field:focus {
+            outline: none;
+            border-color: #7289da;
+        }
+        .input-field::placeholder {
+            color: #99aab5;
+        }
+        .submit-btn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 4px;
+            background-color: #7289da;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .submit-btn:hover {
+            background-color: #5b6e8f;
+        }
+        .footer-text {
+            text-align: center;
+            color: #99aab5;
+            margin-top: 15px;
+        }
+        .footer-text a {
+            color: #7289da;
+            text-decoration: none;
+        }
+        .footer-text a:hover {
+            text-decoration: underline;
+        }
+        .captcha {
+            background: #40444b;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            text-align: center;
+        }
+        .error {
+            color: red;
+            font-size: 14px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="form-container">
+        <h1>Register with Discord Security Bot</h1>
+        <form id="registration-form" action="#" method="post" onsubmit="return validateForm()">
+            <!-- Username -->
+            <input class="input-field" type="text" name="username" placeholder="Enter Username" required>
+
+            <!-- Email or Phone -->
+            <input class="input-field" id="emailOrPhone" type="text" name="emailOrPhone" placeholder="Enter Email or Phone Number" required>
+
+            <!-- Password -->
+            <input class="input-field" type="password" name="password" placeholder="Enter Password" required>
+
+            <!-- Confirm Password -->
+            <input class="input-field" type="password" name="confirm_password" placeholder="Confirm Password" required>
+
+            <!-- CAPTCHA -->
+            <div class="captcha">
+                <label for="captcha">Captcha: 5 + 3 = ?</label><br>
+                <input class="input-field" type="text" name="captcha" placeholder="Enter the answer" required>
+            </div>
+
+            <!-- Submit Button -->
+            <button class="submit-btn" type="submit">Register</button>
+        </form>
+
+        <div class="footer-text">
+            <p>Already have an account? <a href="#">Login here</a></p>
+        </div>
+        <div id="error-message" class="error"></div>
+    </div>
+</div>
+
+<script>
+    function validateForm() {
+        var emailOrPhone = document.getElementById("emailOrPhone").value;
+        var errorMessage = document.getElementById("error-message");
+        var emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.(com|org|net|co|io)$/; // email regex
+        var phoneRegex = /^[\+]?[0-9]{10,15}$/; // basic phone number regex
+
+        // Check if input is an email or phone number
+        if (emailOrPhone.match(emailRegex)) {
+            // Check if email domain is allowed
+            var allowedDomains = ['gmail.com', 'yahoo.com'];
+            var domain = emailOrPhone.split('@')[1];
+            if (!allowedDomains.includes(domain)) {
+                errorMessage.textContent = "Only Gmail or Yahoo email addresses are allowed.";
+                return false;
+            }
+        } else if (!emailOrPhone.match(phoneRegex)) {
+            errorMessage.textContent = "Please enter a valid email address or phone number.";
+            return false;
+        } else {
+            errorMessage.textContent = ""; // Clear error message if valid
+        }
+
+        return true; // Continue with form submission
+    }
+</script>
+
+</body>
 </html>
